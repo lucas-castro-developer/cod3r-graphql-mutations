@@ -2,16 +2,18 @@ const { perfis, proximoId } = require("../../data/db");
 
 function indicePerfil(filtro) {
   if (!filtro) return -1;
-  const { id } = filtro;
+  const { id, nome } = filtro;
   if (id) {
-    return perfis.findIndex((u) => u.id === id);
+    return perfis.findIndex((p) => p.id === id);
+  } else if (nome) {
+    return perfis.findIndex((p) => p.nome === nome);
   }
   return -1;
 }
 
 module.exports = {
   novoPerfil(_, { dados }) {
-    const nomeExistente = perfis.some((u) => u.nome === dados.nome);
+    const nomeExistente = perfis.some((p) => p.nome === dados.nome);
 
     if (nomeExistente) {
       throw new Error("Perfil cadastrado!");
